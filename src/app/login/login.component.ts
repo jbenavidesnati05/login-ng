@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AutenticacionService } from '../shared/services/autenticacion.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
   public myForm!:FormGroup;
 
-  constructor(private fb:FormBuilder){
+  constructor(private fb:FormBuilder, private loginPrd: AutenticacionService){
 
   }
 
@@ -30,8 +31,8 @@ export class LoginComponent {
         control.markAllAsTouched();
       })
       return
-    }else{
-      alert("se va a enviar el formulario")
+    }if(!this.loginPrd.ingresarAplicativo(this.myForm.value)){
+      alert("usuario o contraseña invalido")
       console.log(this.myForm.value);
     }
   }
